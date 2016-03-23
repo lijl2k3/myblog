@@ -3,24 +3,26 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/reg', function (req, res) {
-  res.render('user/reg', {title: '×¢²á'});
+
+  res.render('user/reg', {title:"æ³¨å†Œ"});
+
 });
 
 /**
- * µ±ÌîĞ´ÓÃ»§×¢²áĞÅÏ¢Ìá½»Ê±µÄ´¦Àí
+ * å½“å¡«å†™ç”¨æˆ·æ³¨å†Œä¿¡æ¯æäº¤æ—¶çš„å¤„ç†
  */
 router.post('/reg', function (req, res) {
 });
 
 /**
- * ÏÔÊ¾ÓÃ»§µÇÂ¼±íµ¥
+ * æ˜¾ç¤ºç”¨æˆ·ç™»å½•è¡¨å•
  */
 router.get('/login', function (req, res) {
-  res.render('user/login', {title: 'µÇÂ¼'});
+  res.render('user/login', {title: 'ç™»å½•'});
 });
 
 /**
- * µ±ÌîĞ´ÓÃ»§µÇÂ¼ĞÅÏ¢Ìá½»Ê±µÄ´¦Àí
+ * å½“å¡«å†™ç”¨æˆ·ç™»å½•ä¿¡æ¯æäº¤æ—¶çš„å¤„ç†
  */
 router.post('/login', function (req, res) {
 });

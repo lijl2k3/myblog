@@ -5,7 +5,7 @@
 var express = require('express');
 var router = express.Router();
 router.get('/add', function (req, res) {
-    res.render('article/add', { title: '·¢±íÎÄÕÂ' });
+    res.render('article/add', { title: 'æ–°å¢æ–‡ç« ' });
 });
 
 router.post('/add', function (req, res) {
