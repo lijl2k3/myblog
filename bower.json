@@ -1,0 +1,21 @@
+{
+  "name": "myblog",
+  "description": "myblog",
+  "main": "",
+  "authors": [
+    "lijl"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
