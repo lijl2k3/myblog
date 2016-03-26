@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles=require('./routes/articles');
 var app = express();
-
+require('./db');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html',ejs.__express);
@@ -27,17 +27,17 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/articles',articles);
 
-// catch 404 and forward to error handler ²¶»ñ404´íÎó£¬²¢×ª·¢µ½´íÎó´¦ÀíÆ÷¡£
+// catch 404 and forward to error handler ï¿½ï¿½ï¿½ï¿½404ï¿½ï¿½ï¿½ó£¬²ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handlers ´íÎó´¦ÀíÆ÷
+// error handlers ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-// development error handler ¿ª·¢»·¾³ÏÂµÄ´íÎó´¦Àí
-// will print stacktrace ½«´òÓ¡³ö¶ÑÕ»ÐÅÏ¢
+// development error handler ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½
+// will print stacktrace ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½Õ»ï¿½ï¿½Ï¢
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -48,8 +48,8 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler Éú²ú»·¾³ÏÂµÄ´íÎó´¦Àí
-// no stacktraces leaked to user ²»ÏòÓÃ»§±©Â¶¶ÑÕ»ÐÅÏ¢
+// production error handler ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½
+// no stacktraces leaked to user ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â¶ï¿½ï¿½Õ»ï¿½ï¿½Ï¢
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -58,5 +58,29 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var settings = require('./settings');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+app.use(session({
+  secret: settings.cookieSecret,
+  key: settings.db,
+  cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},
+  resave:true,
+  saveUninitialized:true,
+  store: new MongoStore({
+    db: settings.db,
+    host: settings.host,
+    port: settings.port,
+  })
+}));
+
+var flash = require('connect-flash');
+app.use(flash());
+app.use(function(req,res,next){
+  res.locals.user = req.session.user;
+  res.locals.success = req.flash('success').toString();
+  res.locals.error = req.flash('error').toString();
+  next();
+});
 
 module.exports = app;
